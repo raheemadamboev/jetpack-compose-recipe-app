@@ -8,5 +8,5 @@ data class SearchResponseModel(
     val count: Int,
 
     @SerializedName("results")
-    val recipes: List<RecipeNetworkModel>
+    val recipes: List<RecipeDtoModel>
 )

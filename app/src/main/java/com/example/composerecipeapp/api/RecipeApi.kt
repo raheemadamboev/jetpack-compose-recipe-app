@@ -1,6 +1,6 @@
 package com.example.composerecipeapp.api
 
-import com.example.composerecipeapp.model.RecipeNetworkModel
+import com.example.composerecipeapp.model.RecipeDtoModel
 import com.example.composerecipeapp.model.SearchResponseModel
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -19,5 +19,5 @@ interface RecipeApi {
     suspend fun get(
         @Header("Authorization") token: String,
         @Query("id") id: Int
-    ): RecipeNetworkModel
+    ): RecipeDtoModel
 }

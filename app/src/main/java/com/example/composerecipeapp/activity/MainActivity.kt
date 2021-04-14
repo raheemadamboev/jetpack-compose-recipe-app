@@ -1,8 +1,8 @@
-package com.example.composerecipeapp
+package com.example.composerecipeapp.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.composerecipeapp.fragment.RecipeListFragment
+import com.example.composerecipeapp.R
 
 class MainActivity : AppCompatActivity() {
 

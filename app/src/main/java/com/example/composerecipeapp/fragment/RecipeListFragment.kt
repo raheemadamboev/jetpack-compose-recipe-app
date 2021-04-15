@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -26,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.composerecipeapp.components.RecipeCard
+import com.example.composerecipeapp.components.getAllFoodCategories
 import com.example.composerecipeapp.viewmodel.RecipeListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -52,35 +55,51 @@ class RecipeListFragment : Fragment() {
                         modifier = Modifier.fillMaxWidth(),
                         color = MaterialTheme.colors.primary
                     ) {
-                        Row(modifier = Modifier.fillMaxWidth()) {
-                            TextField(
-                                value = query,
-                                onValueChange = { viewmodel.onQueryChange(it) },
-                                modifier = Modifier
-                                    .fillMaxWidth(0.9f)
-                                    .padding(8.dp),
-                                label = { Text(text = "Search") },
-                                keyboardOptions = KeyboardOptions(
-                                    keyboardType = KeyboardType.Text,
-                                    imeAction = ImeAction.Search
-                                ),
-                                leadingIcon = {
-                                    Icon(
-                                        imageVector = Icons.Filled.Search,
-                                        contentDescription = "raheem"
+                        Column {
+                            Row(modifier = Modifier.fillMaxWidth()) {
+                                TextField(
+                                    value = query,
+                                    onValueChange = { viewmodel.onQueryChange(it) },
+                                    modifier = Modifier
+                                        .fillMaxWidth(0.9f)
+                                        .padding(8.dp),
+                                    label = { Text(text = "Search") },
+                                    keyboardOptions = KeyboardOptions(
+                                        keyboardType = KeyboardType.Text,
+                                        imeAction = ImeAction.Search
+                                    ),
+                                    leadingIcon = {
+                                        Icon(
+                                            imageVector = Icons.Filled.Search,
+                                            contentDescription = "raheem"
+                                        )
+                                    },
+                                    keyboardActions = KeyboardActions(
+                                        onSearch = {
+                                            viewmodel.search(query)
+                                            keyboard?.hide()
+                                        }
+                                    ),
+                                    textStyle = TextStyle(color = MaterialTheme.colors.onSurface),
+                                    colors = TextFieldDefaults.textFieldColors(
+                                        backgroundColor = MaterialTheme.colors.surface
                                     )
-                                },
-                                keyboardActions = KeyboardActions(
-                                    onSearch = {
-                                        viewmodel.search(query)
-                                        keyboard?.hide()
-                                    }
-                                ),
-                                textStyle = TextStyle(color = MaterialTheme.colors.onSurface),
-                                colors = TextFieldDefaults.textFieldColors(
-                                    backgroundColor = MaterialTheme.colors.surface
                                 )
-                            )
+                            }
+                            Row(
+                                modifier = Modifier
+                                    .horizontalScroll(rememberScrollState())
+                                    .fillMaxWidth()
+                            ) {
+                                for (category in getAllFoodCategories()) {
+                                    Text(
+                                        text = category.value,
+                                        style = MaterialTheme.typography.body2,
+                                        color = MaterialTheme.colors.secondary,
+                                        modifier = Modifier.padding(8.dp)
+                                    )
+                                }
+                            }
                         }
                     }
 

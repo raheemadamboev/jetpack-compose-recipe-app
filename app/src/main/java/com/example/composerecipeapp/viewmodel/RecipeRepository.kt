@@ -4,7 +4,7 @@ import com.example.composerecipeapp.model.RecipeModel
 
 interface RecipeRepository {
 
-    suspend fun search(token: String, page: Int, query: String): List<RecipeModel>
+    suspend fun search(page: Int, query: String, token: String): List<RecipeModel>
 
-    suspend fun get(token: String, id: Int): RecipeModel
+    suspend fun get(id: Int, token: String): RecipeModel
 }

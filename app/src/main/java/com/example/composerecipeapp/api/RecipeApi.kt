@@ -16,12 +16,12 @@ interface RecipeApi {
     suspend fun search(
         @Query("page") page: Int,
         @Query("query") query: String,
-        @Header("Authorization") token: String = TOKEN
+        @Header("Authorization") token: String
         ): SearchResponseModel
 
     @GET("get")
     suspend fun get(
         @Query("id") id: Int,
-        @Header("Authorization") token: String = TOKEN
+        @Header("Authorization") token: String
         ): RecipeDtoModel
 }

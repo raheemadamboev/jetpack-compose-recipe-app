@@ -36,4 +36,9 @@ object ApplicationModule {
         .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
         .build()
         .create(RecipeApi::class.java)
+
+    @Singleton
+    @Provides
+    fun provideRecipeRepository(recipeApi: RecipeApi, recipeDtoMapper: RecipeDtoMapper): RecipeRepository =
+        RecipeRepositoryImpl(recipeApi, recipeDtoMapper)
 }

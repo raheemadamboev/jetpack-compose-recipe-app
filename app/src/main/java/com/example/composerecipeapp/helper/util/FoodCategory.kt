@@ -1,4 +1,4 @@
-package com.example.composerecipeapp.components
+package com.example.composerecipeapp.helper.util
 
 enum class FoodCategory(val value: String) {
 

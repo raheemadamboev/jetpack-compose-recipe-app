@@ -5,8 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.composerecipeapp.api.RecipeApi
-import com.example.composerecipeapp.components.FoodCategory
-import com.example.composerecipeapp.components.getFoodCategory
+import com.example.composerecipeapp.helper.util.FoodCategory
+import com.example.composerecipeapp.helper.util.getFoodCategory
 import com.example.composerecipeapp.model.RecipeModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -22,6 +22,9 @@ class RecipeListViewModel @Inject constructor(
     val query: MutableState<String> = mutableStateOf("")
 
     val selectedCategory: MutableState<FoodCategory?> = mutableStateOf(null)
+
+    var categoryScrollPosition = 0
+        private set
 
     init {
         search()
@@ -41,5 +44,9 @@ class RecipeListViewModel @Inject constructor(
         val newCategory = getFoodCategory(category)
         selectedCategory.value = newCategory
         onQueryChange(category)
+    }
+
+    fun onChangeCategoryScrollPosition(scrollPosition: Int) {
+        categoryScrollPosition = scrollPosition
     }
 }

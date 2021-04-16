@@ -30,7 +30,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.composerecipeapp.components.FoodCategoryChip
 import com.example.composerecipeapp.components.RecipeCard
-import com.example.composerecipeapp.components.getAllFoodCategories
+import com.example.composerecipeapp.helper.util.getAllFoodCategories
 import com.example.composerecipeapp.viewmodel.RecipeListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -90,12 +90,16 @@ class RecipeListFragment : Fragment() {
                                     )
                                 )
                             }
+
+                            val scrollState = rememberScrollState()
+
                             Row(
                                 modifier = Modifier
-                                    .horizontalScroll(rememberScrollState())
+                                    .horizontalScroll(state = scrollState)
                                     .fillMaxWidth()
                                     .padding(start = 8.dp, bottom = 8.dp)
                             ) {
+
                                 for (category in getAllFoodCategories()) {
                                     FoodCategoryChip(
                                         category = category.value,
@@ -103,6 +107,7 @@ class RecipeListFragment : Fragment() {
                                         onExecuteSearch = viewmodel::search,
                                         onSelectedCategoryChanged = {
                                             viewmodel.onSelectedCategoryChange(it)
+                                            viewmodel.onChangeCategoryScrollPosition(scrollState.value)
                                         }
                                     )
                                 }

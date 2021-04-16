@@ -19,6 +19,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.TextStyle
@@ -27,6 +28,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.example.composerecipeapp.components.FoodCategoryChip
 import com.example.composerecipeapp.components.RecipeCard
 import com.example.composerecipeapp.components.getAllFoodCategories
 import com.example.composerecipeapp.viewmodel.RecipeListViewModel
@@ -48,12 +50,14 @@ class RecipeListFragment : Fragment() {
 
                 val keyboard = LocalSoftwareKeyboardController.current
 
+                val selectedCategory = viewmodel.selectedCategory.value
+
                 Column {
                     // build toolbar
                     Surface(
                         elevation = 8.dp,
                         modifier = Modifier.fillMaxWidth(),
-                        color = MaterialTheme.colors.primary
+                        color = Color.White
                     ) {
                         Column {
                             Row(modifier = Modifier.fillMaxWidth()) {
@@ -76,7 +80,7 @@ class RecipeListFragment : Fragment() {
                                     },
                                     keyboardActions = KeyboardActions(
                                         onSearch = {
-                                            viewmodel.search(query)
+                                            viewmodel.search()
                                             keyboard?.hide()
                                         }
                                     ),
@@ -90,13 +94,16 @@ class RecipeListFragment : Fragment() {
                                 modifier = Modifier
                                     .horizontalScroll(rememberScrollState())
                                     .fillMaxWidth()
+                                    .padding(start = 8.dp, bottom = 8.dp)
                             ) {
                                 for (category in getAllFoodCategories()) {
-                                    Text(
-                                        text = category.value,
-                                        style = MaterialTheme.typography.body2,
-                                        color = MaterialTheme.colors.secondary,
-                                        modifier = Modifier.padding(8.dp)
+                                    FoodCategoryChip(
+                                        category = category.value,
+                                        isSelected = selectedCategory == category,
+                                        onExecuteSearch = viewmodel::search,
+                                        onSelectedCategoryChanged = {
+                                            viewmodel.onSelectedCategoryChange(it)
+                                        }
                                     )
                                 }
                             }

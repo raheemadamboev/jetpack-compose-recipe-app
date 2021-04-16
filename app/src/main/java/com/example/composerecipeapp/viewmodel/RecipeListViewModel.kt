@@ -48,5 +48,6 @@ class RecipeListViewModel @Inject constructor(
 
     fun onChangeCategoryScrollPosition(scrollPosition: Int) {
         categoryScrollPosition = scrollPosition
+        println("raheem: category changed")
     }
 }

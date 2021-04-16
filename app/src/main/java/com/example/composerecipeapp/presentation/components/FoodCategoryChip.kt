@@ -1,4 +1,4 @@
-package com.example.composerecipeapp.components
+package com.example.composerecipeapp.presentation.components
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding

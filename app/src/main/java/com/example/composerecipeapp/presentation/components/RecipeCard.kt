@@ -1,4 +1,4 @@
-package com.example.composerecipeapp.components
+package com.example.composerecipeapp.presentation.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable

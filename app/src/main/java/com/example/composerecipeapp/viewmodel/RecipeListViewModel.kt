@@ -23,6 +23,8 @@ class RecipeListViewModel @Inject constructor(
 
     val selectedCategory: MutableState<FoodCategory?> = mutableStateOf(null)
 
+    val loading: MutableState<Boolean> = mutableStateOf(false)
+
     var categoryScrollPosition = 0
         private set
 
@@ -32,7 +34,10 @@ class RecipeListViewModel @Inject constructor(
 
     fun search() {
         viewModelScope.launch {
+            loading.value = true
+            resetSearchState()
             recipes.value = repository.search(1, query.value, RecipeApi.TOKEN)
+            loading.value = false
         }
     }
 
@@ -49,5 +54,14 @@ class RecipeListViewModel @Inject constructor(
     fun onChangeCategoryScrollPosition(scrollPosition: Int) {
         categoryScrollPosition = scrollPosition
         println("raheem: category changed")
+    }
+
+    private fun resetSearchState() {
+        recipes.value = listOf()
+        if (selectedCategory.value?.value != query.value) clearSelectedCategory()
+    }
+
+    private fun clearSelectedCategory() {
+        selectedCategory.value = null
     }
 }

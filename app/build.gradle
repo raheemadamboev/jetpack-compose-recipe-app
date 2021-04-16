@@ -72,6 +72,8 @@ dependencies {
     // Integration with observables
     implementation 'androidx.compose.runtime:runtime-livedata:1.0.0-beta04'
     implementation 'androidx.compose.runtime:runtime-rxjava2:1.0.0-beta04'
+    // To use constraint layout in compose
+    implementation "androidx.constraintlayout:constraintlayout-compose:1.0.0-alpha05"
 
     def nav_version = "2.3.5"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"

@@ -1,11 +1,12 @@
 package com.example.composerecipeapp.presentation.components
 
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -23,7 +24,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.example.composerecipeapp.helper.util.FoodCategory
-import com.example.composerecipeapp.helper.util.getAllFoodCategories
 
 @ExperimentalComposeUiApi
 @Composable
@@ -31,10 +31,10 @@ fun SearchAppBar(
     query: String,
     onQueryChange: (String) -> Unit,
     onSearch: () -> Unit,
+    categories: List<FoodCategory>,
     keyboard: SoftwareKeyboardController?,
     selectedCategory: FoodCategory?,
     onSelectedCategoryChange: (String) -> Unit,
-    onChangeCategoryScrollPosition: (Int) -> Unit,
     onToggleTheme: () -> Unit
 ) {
     Surface(
@@ -87,21 +87,17 @@ fun SearchAppBar(
                 }
             }
 
-            val scrollState = rememberScrollState()
-
-            Row(
-                modifier = Modifier
-                    .horizontalScroll(state = scrollState)
-                    .fillMaxWidth()
-                    .padding(start = 8.dp, bottom = 8.dp)
+            val scrollState = rememberLazyListState()
+            LazyRow(
+                modifier = Modifier.padding(start = 8.dp, bottom = 8.dp),
+                state = scrollState
             ) {
-                for (category in getAllFoodCategories()) {
+                items(categories) { category ->
                     FoodCategoryChip(
                         category = category.value,
                         isSelected = selectedCategory == category,
                         onSelectedCategoryChanged = {
                             onSelectedCategoryChange(it)
-                            onChangeCategoryScrollPosition(scrollState.value)
                         },
                         onExecuteSearch = { onSearch() },
                     )

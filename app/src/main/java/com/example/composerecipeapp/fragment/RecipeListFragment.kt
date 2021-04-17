@@ -7,16 +7,23 @@ import android.view.ViewGroup
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.example.composerecipeapp.helper.util.getAllFoodCategories
 import com.example.composerecipeapp.injection.App
 import com.example.composerecipeapp.presentation.components.CircularIndeterminateProgressBar
 import com.example.composerecipeapp.presentation.components.RecipeCard
@@ -54,10 +61,10 @@ class RecipeListFragment : Fragment() {
                             query = query,
                             onQueryChange = viewmodel::onQueryChange,
                             onSearch = viewmodel::search,
+                            categories = getAllFoodCategories(),
                             keyboard = keyboard,
                             selectedCategory = selectedCategory,
                             onSelectedCategoryChange = viewmodel::onSelectedCategoryChange,
-                            onChangeCategoryScrollPosition = viewmodel::onChangeCategoryScrollPosition,
                             onToggleTheme = {
                                 application.toggleLightTheme()
                             }
@@ -82,5 +89,28 @@ class RecipeListFragment : Fragment() {
                 }
             }
         }
+    }
+}
+
+@Composable
+fun GradientDemo() {
+    val colors = listOf(
+        Color.Blue,
+        Color.Red,
+        Color.Blue
+    )
+
+    val brush = Brush.linearGradient(
+        colors,
+        start = Offset(200f, 200f),
+        end = Offset(400f, 400f)
+    )
+
+    Surface(shape = MaterialTheme.shapes.small) {
+        Spacer(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(brush = brush)
+        )
     }
 }

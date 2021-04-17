@@ -6,19 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.runtime.Composable
+import androidx.compose.material.Scaffold
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
@@ -58,20 +52,28 @@ class RecipeListFragment : Fragment() {
 
                     val loading = viewmodel.loading.value
 
-                    Column {
-                        SearchAppBar(
-                            query = query,
-                            onQueryChange = viewmodel::onQueryChange,
-                            onSearch = viewmodel::search,
-                            categories = getAllFoodCategories(),
-                            keyboard = keyboard,
-                            selectedCategory = selectedCategory,
-                            onSelectedCategoryChange = viewmodel::onSelectedCategoryChange,
-                            onToggleTheme = {
-                                application.toggleLightTheme()
-                            }
-                        )
+                    Scaffold(
+                        topBar = {
+                            SearchAppBar(
+                                query = query,
+                                onQueryChange = viewmodel::onQueryChange,
+                                onSearch = viewmodel::search,
+                                categories = getAllFoodCategories(),
+                                keyboard = keyboard,
+                                selectedCategory = selectedCategory,
+                                onSelectedCategoryChange = viewmodel::onSelectedCategoryChange,
+                                onToggleTheme = {
+                                    application.toggleLightTheme()
+                                }
+                            )
+                        },
+                        bottomBar = {
 
+                        },
+                        drawerContent = {
+
+                        }
+                    ) {
                         Box(
                             modifier = Modifier
                                 .fillMaxSize()
@@ -98,7 +100,7 @@ class RecipeListFragment : Fragment() {
     }
 }
 
-@Composable
+/*@Composable
 fun GradientDemo() {
     val colors = listOf(
         Color.Blue,
@@ -120,3 +122,4 @@ fun GradientDemo() {
         )
     }
 }
+ */

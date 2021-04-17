@@ -9,6 +9,7 @@ import com.example.composerecipeapp.helper.util.FoodCategory
 import com.example.composerecipeapp.helper.util.getFoodCategory
 import com.example.composerecipeapp.model.RecipeModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -32,6 +33,7 @@ class RecipeListViewModel @Inject constructor(
     fun search() {
         viewModelScope.launch {
             loading.value = true
+            delay(3000)
             resetSearchState()
             recipes.value = repository.search(1, query.value, RecipeApi.TOKEN)
             loading.value = false

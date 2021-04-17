@@ -21,11 +21,13 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.composerecipeapp.helper.util.getAllFoodCategories
 import com.example.composerecipeapp.injection.App
 import com.example.composerecipeapp.presentation.components.CircularIndeterminateProgressBar
+import com.example.composerecipeapp.presentation.components.LoadingRecipeListShimmer
 import com.example.composerecipeapp.presentation.components.RecipeCard
 import com.example.composerecipeapp.presentation.components.SearchAppBar
 import com.example.composerecipeapp.presentation.theme.AppTheme
@@ -75,11 +77,15 @@ class RecipeListFragment : Fragment() {
                                 .fillMaxSize()
                                 .background(MaterialTheme.colors.background)
                         ) {
-                            LazyColumn {
-                                itemsIndexed(
-                                    items = recipes
-                                ) { _, item ->
-                                    RecipeCard(recipe = item, onClick = {})
+                            if (loading) {
+                                LoadingRecipeListShimmer(imageHeight = 250.dp)
+                            } else {
+                                LazyColumn {
+                                    itemsIndexed(
+                                        items = recipes
+                                    ) { _, item ->
+                                        RecipeCard(recipe = item, onClick = {})
+                                    }
                                 }
                             }
 

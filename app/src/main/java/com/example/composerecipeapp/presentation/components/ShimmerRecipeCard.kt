@@ -28,7 +28,7 @@ fun ShimmerRecipeCard(
     )
 
     Column(modifier = Modifier.padding(padding)) {
-        Surface(shape = MaterialTheme.shapes.small) {
+        Surface(shape = MaterialTheme.shapes.medium) {
             Spacer(
                 modifier = Modifier
                     .fillMaxWidth()

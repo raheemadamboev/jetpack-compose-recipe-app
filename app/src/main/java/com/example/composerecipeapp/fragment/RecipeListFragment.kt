@@ -25,6 +25,7 @@ import com.example.composerecipeapp.injection.App
 import com.example.composerecipeapp.presentation.components.*
 import com.example.composerecipeapp.presentation.theme.AppTheme
 import com.example.composerecipeapp.presentation.util.SnackbarController
+import com.example.composerecipeapp.viewmodel.RecipeListEvent
 import com.example.composerecipeapp.viewmodel.RecipeListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -69,7 +70,7 @@ class RecipeListFragment : Fragment() {
                                             actionLabel = "Hide"
                                         )
                                     } else {
-                                        viewmodel.search()
+                                        viewmodel.onTriggerEvent(RecipeListEvent.NewSearchEvent)
                                     }
                                 },
                                 categories = getAllFoodCategories(),
@@ -98,7 +99,7 @@ class RecipeListFragment : Fragment() {
                                         viewmodel.onChangeRecipeScrollPosition(index)
 
                                         if ((index + 1) >= (page * RecipeListViewModel.PAGE_SIZE) && !loading) {
-                                            viewmodel.nextPage()
+                                            viewmodel.onTriggerEvent(RecipeListEvent.NextPageEvent)
                                         }
 
                                         RecipeCard(recipe = item, onClick = {})

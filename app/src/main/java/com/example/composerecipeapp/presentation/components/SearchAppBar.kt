@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
@@ -32,11 +33,12 @@ fun SearchAppBar(
     onQueryChange: (String) -> Unit,
     onSearch: () -> Unit,
     categories: List<FoodCategory>,
-    keyboard: SoftwareKeyboardController?,
     selectedCategory: FoodCategory?,
     onSelectedCategoryChange: (String) -> Unit,
     onToggleTheme: () -> Unit
 ) {
+    val keyboard = LocalSoftwareKeyboardController.current
+
     Surface(
         elevation = 8.dp,
         modifier = Modifier.fillMaxWidth(),

@@ -4,20 +4,27 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.rememberScaffoldState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
-import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.example.composerecipeapp.helper.util.getAllFoodCategories
 import com.example.composerecipeapp.injection.App
+import com.example.composerecipeapp.presentation.components.*
+import com.example.composerecipeapp.presentation.theme.AppTheme
+import com.example.composerecipeapp.presentation.util.SnackbarController
 import com.example.composerecipeapp.viewmodel.RecipeListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -30,80 +37,79 @@ class RecipeListFragment : Fragment() {
     @Inject
     lateinit var application: App
 
+    private val snackbarController = SnackbarController(lifecycleScope)
+
     @ExperimentalComposeUiApi
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return ComposeView(requireContext()).apply {
             setContent {
+                AppTheme(darkTheme = application.isDark.value) {
+                    val recipes = viewmodel.recipes.value
 
-                //    val isShowing = remember { mutableStateOf(false) }
+                    val query = viewmodel.query.value
 
-                val snackbarHostState = remember { SnackbarHostState() }
+                    val selectedCategory = viewmodel.selectedCategory.value
 
-                Column {
-                    Button(onClick = {
-                        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-                            snackbarHostState.showSnackbar(
-                                message = "hey look snackbar",
-                                actionLabel = "Show",
-                                duration = SnackbarDuration.Short
+                    val loading = viewmodel.loading.value
+
+                    val scaffoldState = rememberScaffoldState()
+
+                    Scaffold(
+                        topBar = {
+                            SearchAppBar(
+                                query = query,
+                                onQueryChange = viewmodel::onQueryChange,
+                                onSearch = {
+                                    if (viewmodel.selectedCategory.value?.value == "Milk") {
+                                        snackbarController.showSnackbar(
+                                            scaffoldState = scaffoldState,
+                                            message = "Invalid category",
+                                            actionLabel = "Hide"
+                                        )
+                                    } else {
+                                        viewmodel.search()
+                                    }
+                                },
+                                categories = getAllFoodCategories(),
+                                selectedCategory = selectedCategory,
+                                onSelectedCategoryChange = viewmodel::onSelectedCategoryChange,
+                                onToggleTheme = {
+                                    application.toggleLightTheme()
+                                }
                             )
+                        },
+                        scaffoldState = scaffoldState,
+                        snackbarHost = {
+                            scaffoldState.snackbarHostState
                         }
-                    }) {
-                        Text(text = "Show snackbar")
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(MaterialTheme.colors.background)
+                        ) {
+                            if (loading) {
+                                LoadingRecipeListShimmer(imageHeight = 250.dp)
+                            } else {
+                                LazyColumn {
+                                    itemsIndexed(
+                                        items = recipes
+                                    ) { _, item ->
+                                        RecipeCard(recipe = item, onClick = {})
+                                    }
+                                }
+                            }
+
+                            CircularIndeterminateProgressBar(isDisplayed = loading)
+                            DefaultSnackbar(
+                                snackbarHostState = scaffoldState.snackbarHostState,
+                                modifier = Modifier.align(Alignment.BottomCenter)
+                            ) {
+                                scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
+                            }
+                        }
                     }
-                    DecoupledSnackbarDemo(snackbarHostState = snackbarHostState)
                 }
-
-                /*
-               AppTheme(darkTheme = application.isDark.value) {
-                   val recipes = viewmodel.recipes.value
-
-                   val query = viewmodel.query.value
-
-                   val keyboard = LocalSoftwareKeyboardController.current
-
-                   val selectedCategory = viewmodel.selectedCategory.value
-
-                   val loading = viewmodel.loading.value
-
-                   Scaffold(
-                       topBar = {
-                           SearchAppBar(
-                               query = query,
-                               onQueryChange = viewmodel::onQueryChange,
-                               onSearch = viewmodel::search,
-                               categories = getAllFoodCategories(),
-                               keyboard = keyboard,
-                               selectedCategory = selectedCategory,
-                               onSelectedCategoryChange = viewmodel::onSelectedCategoryChange,
-                               onToggleTheme = {
-                                   application.toggleLightTheme()
-                               }
-                           )
-                       },
-                   ) {
-                       Box(
-                           modifier = Modifier
-                               .fillMaxSize()
-                               .background(MaterialTheme.colors.background)
-                       ) {
-                           if (loading) {
-                               LoadingRecipeListShimmer(imageHeight = 250.dp)
-                           } else {
-                               LazyColumn {
-                                   itemsIndexed(
-                                       items = recipes
-                                   ) { _, item ->
-                                       RecipeCard(recipe = item, onClick = {})
-                                   }
-                               }
-                           }
-
-                           CircularIndeterminateProgressBar(isDisplayed = loading)
-                       }
-                   }
-               }
-                    */
             }
         }
     }
@@ -133,6 +139,32 @@ fun GradientDemo() {
 }
  */
 
+/*
+@Composable
+fun SnackbarBody() {
+
+    //    val isShowing = remember { mutableStateOf(false) }
+
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    Column {
+        Button(onClick = {
+              viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+                snackbarHostState.showSnackbar(
+                    message = "hey look snackbar",
+                    actionLabel = "Show",
+                    duration = SnackbarDuration.Short
+                )
+            }
+        }) {
+            Text(text = "Show snackbar")
+        }
+        DecoupledSnackbarDemo(snackbarHostState = snackbarHostState)
+    }
+}
+ */
+
+/*
 @Composable
 fun DecoupledSnackbarDemo(
     snackbarHostState: SnackbarHostState
@@ -190,3 +222,4 @@ fun SnackBarDemo(isShowing: Boolean, onHideSnackbar: () -> Unit) {
         }
     }
 }
+ */

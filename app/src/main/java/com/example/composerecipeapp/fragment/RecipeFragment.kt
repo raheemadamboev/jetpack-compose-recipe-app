@@ -13,17 +13,20 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class RecipeFragment : Fragment() {
+
+    private val args by navArgs<RecipeFragmentArgs>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return ComposeView(requireContext()).apply {
             setContent {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text(
-                        text = "RECIPE FRAGMENT",
+                        text = args.recipeId.toString(),
                         style = TextStyle(
                             fontSize = 21.sp
                         )

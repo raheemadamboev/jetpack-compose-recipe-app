@@ -15,5 +15,9 @@
     <fragment
         android:id="@+id/recipeFragment"
         android:name="com.example.composerecipeapp.fragment.RecipeFragment"
-        android:label="RecipeFragment" />
+        android:label="RecipeFragment" >
+        <argument
+            android:name="recipeId"
+            app:argType="integer" />
+    </fragment>
 </navigation>

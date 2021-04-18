@@ -10,15 +10,15 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.example.composerecipeapp.injection.App
 import com.example.composerecipeapp.presentation.components.CircularIndeterminateProgressBar
+import com.example.composerecipeapp.presentation.components.LoadingRecipeShimmer
 import com.example.composerecipeapp.presentation.components.RecipeView
 import com.example.composerecipeapp.presentation.theme.AppTheme
-import com.example.composerecipeapp.presentation.util.SnackbarController
 import com.example.composerecipeapp.viewmodel.RecipeEvent
 import com.example.composerecipeapp.viewmodel.RecipeViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,14 +34,12 @@ class RecipeFragment : Fragment() {
     @Inject
     lateinit var app: App
 
-    private val snackbarController = SnackbarController(lifecycleScope)
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.onTriggerEvent(RecipeEvent.GetRecipeEvent(args.recipeId))
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return ComposeView(requireContext()).apply {
             setContent {
 
@@ -59,8 +57,12 @@ class RecipeFragment : Fragment() {
                         }
                     ) {
                         Box(modifier = Modifier.fillMaxSize()) {
-                            recipe?.let {
-                                RecipeView(recipe = it)
+                            if (loading) {
+                                LoadingRecipeShimmer(imageHeight = 260.dp)
+                            } else {
+                                recipe?.let {
+                                    RecipeView(recipe = it)
+                                }
                             }
 
                             CircularIndeterminateProgressBar(isDisplayed = loading)

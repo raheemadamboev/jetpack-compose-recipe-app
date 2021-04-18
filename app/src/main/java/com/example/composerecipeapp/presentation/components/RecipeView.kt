@@ -69,7 +69,7 @@ fun RecipeView(
                     text = if (recipe.dateUpdated != null) "Updated ${recipe.dateUpdated} by $it" else "By $it",
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(bottom = 8.dp, top = 8.dpre),
+                        .padding(bottom = 8.dp, top = 4.dp),
                     style = MaterialTheme.typography.caption
                 )
             }

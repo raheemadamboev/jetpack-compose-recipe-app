@@ -4,20 +4,25 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.Scaffold
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
+import com.example.composerecipeapp.injection.App
+import com.example.composerecipeapp.presentation.components.CircularIndeterminateProgressBar
+import com.example.composerecipeapp.presentation.components.RecipeView
+import com.example.composerecipeapp.presentation.theme.AppTheme
+import com.example.composerecipeapp.presentation.util.SnackbarController
 import com.example.composerecipeapp.viewmodel.RecipeEvent
 import com.example.composerecipeapp.viewmodel.RecipeViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class RecipeFragment : Fragment() {
@@ -25,6 +30,11 @@ class RecipeFragment : Fragment() {
     private val args by navArgs<RecipeFragmentArgs>()
 
     private val viewModel by viewModels<RecipeViewModel>()
+
+    @Inject
+    lateinit var app: App
+
+    private val snackbarController = SnackbarController(lifecycleScope)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,13 +49,23 @@ class RecipeFragment : Fragment() {
 
                 val loading = viewModel.loading.value
 
-                Column(modifier = Modifier.padding(16.dp)) {
-                    Text(
-                        text = (recipe?.title).toString(),
-                        style = TextStyle(
-                            fontSize = 21.sp
-                        )
-                    )
+                val scaffoldState = rememberScaffoldState()
+
+                AppTheme(darkTheme = app.isDark.value) {
+                    Scaffold(
+                        scaffoldState = scaffoldState,
+                        snackbarHost = {
+                            scaffoldState.snackbarHostState
+                        }
+                    ) {
+                        Box(modifier = Modifier.fillMaxSize()) {
+                            recipe?.let {
+                                RecipeView(recipe = it)
+                            }
+
+                            CircularIndeterminateProgressBar(isDisplayed = loading)
+                        }
+                    }
                 }
             }
         }

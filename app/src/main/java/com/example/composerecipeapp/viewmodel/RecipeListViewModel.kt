@@ -17,6 +17,9 @@ import javax.inject.Inject
 class RecipeListViewModel @Inject constructor(
     private val repository: RecipeRepository,
 ) : ViewModel() {
+    companion object {
+        const val PAGE_SIZE = 30
+    }
 
     val recipes: MutableState<List<RecipeModel>> = mutableStateOf(listOf())
 
@@ -26,6 +29,10 @@ class RecipeListViewModel @Inject constructor(
 
     val loading: MutableState<Boolean> = mutableStateOf(false)
 
+    val page: MutableState<Int> = mutableStateOf(1)
+
+    private var recipeScrollPosition = 0
+
     init {
         search()
     }
@@ -33,10 +40,32 @@ class RecipeListViewModel @Inject constructor(
     fun search() {
         viewModelScope.launch {
             loading.value = true
-            delay(3000)
             resetSearchState()
+            delay(3000)
             recipes.value = repository.search(1, query.value, RecipeApi.TOKEN)
             loading.value = false
+        }
+    }
+
+    fun nextPage() {
+        viewModelScope.launch {
+            // prevent duplicate events due to recompose happening too quickly
+            if ((recipeScrollPosition + 1) >= (page.value * PAGE_SIZE)) {
+                loading.value = true
+                incrementPage()
+
+                if (page.value > 1) {
+                    appendRecipes(
+                        repository.search(
+                            page = page.value,
+                            query = query.value,
+                            token = RecipeApi.TOKEN
+                        )
+                    )
+                }
+
+                loading.value = false
+            }
         }
     }
 
@@ -50,12 +79,31 @@ class RecipeListViewModel @Inject constructor(
         onQueryChange(category)
     }
 
+    fun onChangeRecipeScrollPosition(position: Int) {
+        recipeScrollPosition = position
+    }
+
+    /**
+     * Append new recipes new page
+     */
+    private fun appendRecipes(recipes: List<RecipeModel>) {
+        val current = ArrayList(this.recipes.value)
+        current.addAll(recipes)
+        this.recipes.value = current
+    }
+
     private fun resetSearchState() {
         recipes.value = listOf()
+        page.value = 1
+        onChangeRecipeScrollPosition(0)
         if (selectedCategory.value?.value != query.value) clearSelectedCategory()
     }
 
     private fun clearSelectedCategory() {
         selectedCategory.value = null
+    }
+
+    private fun incrementPage() {
+        page.value = page.value + 1
     }
 }

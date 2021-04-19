@@ -19,7 +19,7 @@ fun FoodCategoryChip(
     onExecuteSearch: () -> Unit
 ) {
     Surface(
-        modifier = Modifier.padding(end = 8.dp),
+        modifier = Modifier.padding(start = 4.dp, end = 4.dp),
         elevation = 8.dp,
         shape = MaterialTheme.shapes.medium,
         color = if (isSelected) Color.LightGray else MaterialTheme.colors.primary

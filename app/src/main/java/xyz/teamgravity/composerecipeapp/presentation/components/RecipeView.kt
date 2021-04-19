@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import com.example.composerecipeapp.R
+import xyz.teamgravity.composerecipeapp.R
 import xyz.teamgravity.composerecipeapp.helper.util.loadPicture
 import xyz.teamgravity.composerecipeapp.model.RecipeModel
 

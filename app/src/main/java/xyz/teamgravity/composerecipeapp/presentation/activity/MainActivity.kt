@@ -2,8 +2,8 @@ package xyz.teamgravity.composerecipeapp.presentation.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.composerecipeapp.R
 import dagger.hilt.android.AndroidEntryPoint
+import xyz.teamgravity.composerecipeapp.R
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {

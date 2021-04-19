@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import xyz.teamgravity.composerecipeapp.model.RecipeModel
-import com.example.composerecipeapp.presentation.fragment.RecipeListFragmentDirections
+import xyz.teamgravity.composerecipeapp.presentation.fragment.RecipeListFragmentDirections
 import xyz.teamgravity.composerecipeapp.viewmodel.recipelist.RecipeListEvent
 import xyz.teamgravity.composerecipeapp.viewmodel.recipelist.RecipeListViewModel
 

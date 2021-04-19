@@ -14,7 +14,6 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
-import com.example.composerecipeapp.presentation.fragment.RecipeFragmentArgs
 import dagger.hilt.android.AndroidEntryPoint
 import xyz.teamgravity.composerecipeapp.injection.App
 import xyz.teamgravity.composerecipeapp.presentation.components.CircularIndeterminateProgressBar

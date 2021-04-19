@@ -1,4 +1,4 @@
-package com.example.composerecipeapp.viewmodel
+package com.example.composerecipeapp.viewmodel.recipe
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.composerecipeapp.api.RecipeApi
 import com.example.composerecipeapp.model.RecipeModel
+import com.example.composerecipeapp.viewmodel.repository.RecipeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -41,9 +42,11 @@ class RecipeViewModel @Inject constructor(
         }
     }
 
+    // get recipe from api
     private suspend fun getRecipe(id: Int) {
         loading.value = true
 
+        // intentional delay to see amazing shimmer animation :)
         delay(1000)
 
         val recipe = repository.get(id, RecipeApi.TOKEN)

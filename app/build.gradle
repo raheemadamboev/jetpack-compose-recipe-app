@@ -48,57 +48,57 @@ android {
 }
 
 dependencies {
-    implementation "androidx.core:core-ktx:$core_ktx"
-    implementation "androidx.appcompat:appcompat:$app_compat"
-    implementation "androidx.fragment:fragment-ktx:$fragment_ktx"
-    implementation "com.google.android.material:material:$material_design"
-    implementation "androidx.constraintlayout:constraintlayout:$constraint_layout"
+    implementation "androidx.core:core-ktx:$core_ktx_ver"
+    implementation "androidx.appcompat:appcompat:$app_compat_ver"
+    implementation "androidx.fragment:fragment-ktx:$fragment_ktx_ver"
+    implementation "com.google.android.material:material:$material_design_ver"
+    implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_ver"
 
     // compose
-    implementation "androidx.compose.ui:ui:$compose"
+    implementation "androidx.compose.ui:ui:$compose_ver"
 
     // tooling support (previews, etc.)
-    implementation "androidx.compose.ui:ui-tooling:$compose"
+    implementation "androidx.compose.ui:ui-tooling:$compose_ver"
 
     // foundation (border, background, box, image, scroll, shapes, animations, etc.)
-    implementation "androidx.compose.foundation:foundation:$compose"
+    implementation "androidx.compose.foundation:foundation:$compose_ver"
 
     // material design
-    implementation "androidx.compose.material:material:$compose"
+    implementation "androidx.compose.material:material:$compose_ver"
 
     // material design icons
-    implementation "androidx.compose.material:material-icons-core:$compose"
-    implementation "androidx.compose.material:material-icons-extended:$compose"
+    implementation "androidx.compose.material:material-icons-core:$compose_ver"
+    implementation "androidx.compose.material:material-icons-extended:$compose_ver"
 
     // integration with activities
-    implementation "androidx.activity:activity-compose:$compose_activity"
+    implementation "androidx.activity:activity-compose:$compose_activity_ver"
 
     // integration with viewmodel
-    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$compose_viewmodel"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$compose_viewmodel_ver"
 
     // integration with observables
-    implementation "androidx.compose.runtime:runtime-livedata:$compose"
-    implementation "androidx.compose.runtime:runtime-rxjava2:$compose"
+    implementation "androidx.compose.runtime:runtime-livedata:$compose_ver"
+    implementation "androidx.compose.runtime:runtime-rxjava2:$compose_ver"
 
     // constraint layout in compose
-    implementation "androidx.constraintlayout:constraintlayout-compose:$compose_constraint_layout"
+    implementation "androidx.constraintlayout:constraintlayout-compose:$compose_constraint_layout_ver"
 
     // animation
-    implementation "androidx.compose.animation:animation:$compose"
+    implementation "androidx.compose.animation:animation:$compose_ver"
 
     // navigation component
-    implementation "androidx.navigation:navigation-fragment-ktx:$navigation_component"
-    implementation "androidx.navigation:navigation-ui-ktx:$navigation_component"
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigation_component_ver"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigation_component_ver"
 
     // retrofit
-    implementation "com.squareup.retrofit2:retrofit:$retrofit"
-    implementation "com.squareup.retrofit2:converter-gson:$retrofit"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_ver"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_ver"
 
     // dagger hilt
-    implementation "com.google.dagger:hilt-android:$hilt"
-    kapt "com.google.dagger:hilt-compiler:$hilt"
+    implementation "com.google.dagger:hilt-android:$hilt_ver"
+    kapt "com.google.dagger:hilt-compiler:$hilt_ver"
 
     // glide
-    implementation "com.github.bumptech.glide:glide:$glide"
-    annotationProcessor "com.github.bumptech.glide:compiler:$glide"
+    implementation "com.github.bumptech.glide:glide:$glide_ver"
+    kapt "com.github.bumptech.glide:compiler:$glide_ver"
 }

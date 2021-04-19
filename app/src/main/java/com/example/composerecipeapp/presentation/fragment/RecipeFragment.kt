@@ -1,4 +1,4 @@
-package com.example.composerecipeapp.fragment
+package com.example.composerecipeapp.presentation.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -19,8 +19,8 @@ import com.example.composerecipeapp.presentation.components.CircularIndeterminat
 import com.example.composerecipeapp.presentation.components.LoadingRecipeShimmer
 import com.example.composerecipeapp.presentation.components.RecipeView
 import com.example.composerecipeapp.presentation.theme.AppTheme
-import com.example.composerecipeapp.viewmodel.RecipeEvent
-import com.example.composerecipeapp.viewmodel.RecipeViewModel
+import com.example.composerecipeapp.viewmodel.recipe.RecipeEvent
+import com.example.composerecipeapp.viewmodel.recipe.RecipeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

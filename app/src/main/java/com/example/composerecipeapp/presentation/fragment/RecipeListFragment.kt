@@ -1,22 +1,13 @@
-package com.example.composerecipeapp.fragment
+package com.example.composerecipeapp.presentation.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -26,8 +17,8 @@ import com.example.composerecipeapp.injection.App
 import com.example.composerecipeapp.presentation.components.*
 import com.example.composerecipeapp.presentation.theme.AppTheme
 import com.example.composerecipeapp.presentation.util.SnackbarController
-import com.example.composerecipeapp.viewmodel.RecipeListEvent
-import com.example.composerecipeapp.viewmodel.RecipeListViewModel
+import com.example.composerecipeapp.viewmodel.recipelist.RecipeListEvent
+import com.example.composerecipeapp.viewmodel.recipelist.RecipeListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

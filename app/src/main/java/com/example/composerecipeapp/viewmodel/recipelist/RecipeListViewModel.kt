@@ -1,4 +1,4 @@
-package com.example.composerecipeapp.viewmodel
+package com.example.composerecipeapp.viewmodel.recipelist
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -9,6 +9,7 @@ import com.example.composerecipeapp.api.RecipeApi
 import com.example.composerecipeapp.helper.util.FoodCategory
 import com.example.composerecipeapp.helper.util.getFoodCategory
 import com.example.composerecipeapp.model.RecipeModel
+import com.example.composerecipeapp.viewmodel.repository.RecipeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -67,14 +68,19 @@ class RecipeListViewModel @Inject constructor(
         }
     }
 
+    // search from api
     private suspend fun search() {
         loading.value = true
         resetSearchState()
+
+        // intentional delay to see amazing shimmer animation :)
         delay(3000)
+
         recipes.value = repository.search(1, query.value, RecipeApi.TOKEN)
         loading.value = false
     }
 
+    // get next page -> pagination
     private suspend fun nextPage() {
         // prevent duplicate events due to recompose happening too quickly
         if ((recipeScrollPosition + 1) >= (page.value * PAGE_SIZE)) {
@@ -95,11 +101,13 @@ class RecipeListViewModel @Inject constructor(
         }
     }
 
+    // restore state after process death
     private suspend fun restoreState() {
         loading.value = true
 
         val results: MutableList<RecipeModel> = mutableListOf()
 
+        // get all pages one by one
         for (i in 1..page.value) {
             val result = repository.search(i, query.value, RecipeApi.TOKEN)
             results.addAll(result)
@@ -109,6 +117,7 @@ class RecipeListViewModel @Inject constructor(
         loading.value = false
     }
 
+    // query changed by selecting chips or text input from user
     fun onQueryChange(query: String) {
         setQuery(query)
     }
@@ -119,19 +128,19 @@ class RecipeListViewModel @Inject constructor(
         onQueryChange(category)
     }
 
+    // recipe list item position (index)
     fun onChangeRecipeScrollPosition(position: Int) {
         setListScrollPosition(position)
     }
 
-    /**
-     * Append new recipes new page
-     */
+    // append new recipes to list (pagination)
     private fun appendRecipes(recipes: List<RecipeModel>) {
         val current = ArrayList(this.recipes.value)
         current.addAll(recipes)
         this.recipes.value = current
     }
 
+    // reset search state to clear list
     private fun resetSearchState() {
         recipes.value = listOf()
         page.value = 1

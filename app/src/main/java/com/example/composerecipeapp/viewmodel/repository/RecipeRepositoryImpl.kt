@@ -1,4 +1,4 @@
-package com.example.composerecipeapp.viewmodel
+package com.example.composerecipeapp.viewmodel.repository
 
 import com.example.composerecipeapp.api.RecipeApi
 import com.example.composerecipeapp.helper.mapper.RecipeDtoMapper

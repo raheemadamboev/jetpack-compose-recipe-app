@@ -1,4 +1,4 @@
-package com.example.composerecipeapp.viewmodel
+package com.example.composerecipeapp.viewmodel.recipe
 
 sealed class RecipeEvent {
 

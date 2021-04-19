@@ -1,7 +1,7 @@
 package com.example.composerecipeapp.helper.mapper
 
-import com.example.composerecipeapp.model.RecipeModel
 import com.example.composerecipeapp.model.RecipeDtoModel
+import com.example.composerecipeapp.model.RecipeModel
 
 class RecipeDtoMapper : DomainMapper<RecipeDtoModel, RecipeModel> {
 

@@ -1,4 +1,4 @@
-package com.example.composerecipeapp.activity
+package com.example.composerecipeapp.presentation.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

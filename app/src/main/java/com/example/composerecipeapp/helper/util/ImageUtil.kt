@@ -1,6 +1,5 @@
 package com.example.composerecipeapp.helper.util
 
-import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import androidx.annotation.DrawableRes

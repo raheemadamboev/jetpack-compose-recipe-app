@@ -3,8 +3,8 @@ package com.example.composerecipeapp.injection
 import android.content.Context
 import com.example.composerecipeapp.api.RecipeApi
 import com.example.composerecipeapp.helper.mapper.RecipeDtoMapper
-import com.example.composerecipeapp.viewmodel.RecipeRepository
-import com.example.composerecipeapp.viewmodel.RecipeRepositoryImpl
+import com.example.composerecipeapp.viewmodel.repository.RecipeRepository
+import com.example.composerecipeapp.viewmodel.repository.RecipeRepositoryImpl
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides

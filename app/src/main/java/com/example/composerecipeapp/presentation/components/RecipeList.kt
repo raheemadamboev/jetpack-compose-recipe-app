@@ -12,10 +12,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.composerecipeapp.fragment.RecipeListFragmentDirections
 import com.example.composerecipeapp.model.RecipeModel
-import com.example.composerecipeapp.viewmodel.RecipeListEvent
-import com.example.composerecipeapp.viewmodel.RecipeListViewModel
+import com.example.composerecipeapp.presentation.fragment.RecipeListFragmentDirections
+import com.example.composerecipeapp.viewmodel.recipelist.RecipeListEvent
+import com.example.composerecipeapp.viewmodel.recipelist.RecipeListViewModel
 
 @Composable
 fun RecipeList(

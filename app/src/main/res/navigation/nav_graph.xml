@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/recipeListFragment"
-        android:name="com.example.composerecipeapp.fragment.RecipeListFragment"
+        android:name="com.example.composerecipeapp.presentation.fragment.RecipeListFragment"
         android:label="RecipeListFragment">
         <action
             android:id="@+id/action_recipeListFragment_to_recipeFragment"
@@ -14,7 +14,7 @@
     </fragment>
     <fragment
         android:id="@+id/recipeFragment"
-        android:name="com.example.composerecipeapp.fragment.RecipeFragment"
+        android:name="com.example.composerecipeapp.presentation.fragment.RecipeFragment"
         android:label="RecipeFragment" >
         <argument
             android:name="recipeId"

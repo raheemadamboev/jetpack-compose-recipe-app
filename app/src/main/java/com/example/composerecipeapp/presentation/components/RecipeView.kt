@@ -33,7 +33,7 @@ fun RecipeView(
                     contentDescription = "raheem",
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(260.dp),
+                        .height(250.dp),
                     contentScale = ContentScale.Crop
                 )
             }

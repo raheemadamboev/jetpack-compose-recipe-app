@@ -14,7 +14,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.example.composerecipeapp.helper.util.getAllFoodCategories
 import com.example.composerecipeapp.injection.App
-import com.example.composerecipeapp.presentation.components.*
+import com.example.composerecipeapp.presentation.components.RecipeList
+import com.example.composerecipeapp.presentation.components.SearchAppBar
 import com.example.composerecipeapp.presentation.theme.AppTheme
 import com.example.composerecipeapp.presentation.util.SnackbarController
 import com.example.composerecipeapp.viewmodel.recipelist.RecipeListEvent
@@ -25,10 +26,10 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class RecipeListFragment : Fragment() {
 
-    private val viewmodel by viewModels<RecipeListViewModel>()
-
     @Inject
     lateinit var application: App
+
+    private val viewmodel by viewModels<RecipeListViewModel>()
 
     private val snackbarController = SnackbarController(lifecycleScope)
 
@@ -55,6 +56,7 @@ class RecipeListFragment : Fragment() {
                                 query = query,
                                 onQueryChange = viewmodel::onQueryChange,
                                 onSearch = {
+                                    // to only demonstrate snackbar
                                     if (viewmodel.selectedCategory.value?.value == "Milk") {
                                         snackbarController.showSnackbar(
                                             scaffoldState = scaffoldState,

@@ -1,5 +1,5 @@
 # jetpack-compose-recipe-app
-Simple recipe app is built by Jetpack Compose
+Simple recipe app is built by Jetpack Compose 
 
 **Jetpack Compose Recipe**
 
